@@ -1,5 +1,6 @@
 #include<iostream>
 #include<map>
+#include<vector>
 using namespace std;
 
 int practiceSet[9][9] = {
@@ -40,15 +41,72 @@ bool colIncludes(int column, int x, int s[9][9]) {
     return false;
 }
 
+vector<int> removeX(vector<int> v, int x) {
+    vector<int> res;
+
+    for(int i = 0; i < v.size(); i++) {
+        if(v[i] != x) res.push_back(v[i]);
+    }
+
+    return res;
+}
+
+bool isComplete(int sudoku[9][9]) {
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 9; j++) {
+            if(sudoku[i][j] == 0) return false;
+        }
+    }
+    return true;
+}
 
 class sudokuSolver {
     public:
 
         int sudoku[9][9];
 
-        void solve(int sudoku[9][9]) {
-            map<string, int[]> candids;
+        void solve(int sudoku[9][9]){
+            map<string, vector<int>> candids;
 
+            for(int i = 0; i < 9; i++) {
+                for(int j = 0; j < 9; j++) {
+
+                    string k = to_string(i) + to_string(j);
+
+                    if(sudoku[i][j] == 0) {
+                        candids.insert(k, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+                    }
+                }
+            }
+
+            while(isComplete(sudoku) == false) {
+
+                for(int i = 0; i < 9; i++) {
+                    for(int j = 0; j < 9; j++) {
+                        int cur = sudoku[i][j];
+                        
+                        if(cur == 0) {
+                            string k = to_string(i) + to_string(j);
+
+                            if(candids[k].size() > 1) {
+                                for(int curC = 0; curC < candids[k].size(); curC++) {
+                                    int curNum = candids[k][curC];
+
+                                    if(rowIncludes(i, curNum, sudoku)) {
+                                        candids[k] = removeX(candids[k], curNum);
+                                    }
+
+                                    if(colIncludes(j, curNum, sudoku)) {
+                                        candids[k] = removeX(candids[k], curNum);
+                                    }
+                                }
+                            } else {
+                                sudoku[i][j] = candids[k][0];
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         sudokuSolver(int s[9][9]) {
