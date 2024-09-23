@@ -66,7 +66,7 @@ class sudokuSolver {
         int sudoku[9][9];
 
         void solve(int sudoku[9][9]){
-            map<string, vector<int>> candids;
+            std::map<string, vector<int>> candids;
 
             for(int i = 0; i < 9; i++) {
                 for(int j = 0; j < 9; j++) {
@@ -109,6 +109,23 @@ class sudokuSolver {
             }
         }
 
+        string toAscii() {
+            string result = "";
+
+            for(int i = 0; i < 9; i++) {
+
+                string curLine = "";
+
+                for(int j = 0; j < 9; j++) {
+                    curLine += sudoku[i][j];
+                    curLine += " "; 
+                }
+
+                result += curLine;
+                result += " \n \n";
+            }
+        }
+
         sudokuSolver(int s[9][9]) {
 
             for(int i = 0; i < 9; i++) {
@@ -116,11 +133,13 @@ class sudokuSolver {
                     sudoku[i][j] = s[i][j];
                 }
             }
-
         };
 };
 
 int main() {
     sudokuSolver x(practiceSet);
+
+    std::cout << x.toAscii();
+
     return 0;
 };
