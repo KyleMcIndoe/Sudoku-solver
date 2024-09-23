@@ -1,4 +1,5 @@
 #include<iostream>
+#include<map>
 using namespace std;
 
 int practiceSet[9][9] = {
@@ -25,7 +26,43 @@ int practiceSetSolution[9][9] = {
     {6, 4, 8, 9, 7, 2, 5, 3, 1}
 };
 
-int main() {
-
-    return 0;
+bool rowIncludes(int row, int x, int s[9][9]) {
+    for(int i = 0; i < 9; i++) {
+        if(s[row][i] == x) return true;
+    }
+    return false;
 }
+
+bool colIncludes(int column, int x, int s[9][9]) {
+    for(int i = 0; i < 9; i++) {
+        if(s[i][column] == x) return true;
+    }
+    return false;
+}
+
+
+class sudokuSolver {
+    public:
+
+        int sudoku[9][9];
+
+        void solve(int sudoku[9][9]) {
+            map<string, int[]> candids;
+
+        }
+
+        sudokuSolver(int s[9][9]) {
+
+            for(int i = 0; i < 9; i++) {
+                for(int j = 0; j < 9; j++) {
+                    sudoku[i][j] = s[i][j];
+                }
+            }
+
+        };
+};
+
+int main() {
+    sudokuSolver x(practiceSet);
+    return 0;
+};
