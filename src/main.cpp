@@ -125,11 +125,11 @@ class sudokuSolver {
                                     int curNum = dic.get(k)[curC];
 
                                     if(rowIncludes(i, curNum, sudoku)) {
-
+                                        dic.add(k, removeX(dic.get(k), curNum));
                                     }
 
                                     if(colIncludes(j, curNum, sudoku)) {
-
+                                        dic.add(k, removeX(dic.get(k), curNum));
                                     }
                                 }
                             } else {
@@ -172,7 +172,7 @@ class sudokuSolver {
 
 int main() {
     sudokuSolver x(practiceSet);
-    x.solve(2);
+    x.solve(810);
 
     std::cout << "Solved sudoku: \n";
     std::cout << x.toAscii();
