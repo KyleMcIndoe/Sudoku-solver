@@ -57,6 +57,13 @@ int practiceSetSolution[9][9] = {
     {6, 4, 8, 9, 7, 2, 5, 3, 1}
 };
 
+bool vecIncludes(vector<int> v, int x) {
+    for(int i = 0; i < v.size(); i++) {
+        if(v[i] == x) return true;
+    }
+    return false;
+}
+
 bool rowIncludes(int row, int x, int s[9][9]) {
     for(int i = 0; i < 9; i++) {
         if(s[row][i] == x) return true;
@@ -67,6 +74,79 @@ bool rowIncludes(int row, int x, int s[9][9]) {
 bool colIncludes(int column, int x, int s[9][9]) {
     for(int i = 0; i < 9; i++) {
         if(s[i][column] == x) return true;
+    }
+    return false;
+}
+
+bool boxIncludes(int x, int y, int val, int s[9][9]) {
+    if(x < 3) {
+        if(y < 3) {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+        if(y < 6) {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 3; j < 6; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+        if(y < 9) {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 6; j < 9; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+    }
+    if(x < 6) {
+        if(y < 3) {
+            for(int i = 3; i < 6; i++) {
+                for(int j = 0; j < 3; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+        if(y < 6) {
+            for(int i = 3; i < 6; i++) {
+                for(int j = 3; j < 6; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+        if(y < 9) {
+            for(int i = 3; i < 6; i++) {
+                for(int j = 6; j < 9; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+    } 
+    if(x < 9) {
+        if(y < 3) {
+            for(int i = 6; i < 9; i++) {
+                for(int j = 0; j < 3; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+        if(y < 6) {
+            for(int i = 6; i < 9; i++) {
+                for(int j = 3; j < 6; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
+        if(y < 9) {
+            for(int i = 6; i < 9; i++) {
+                for(int j = 6; j < 9; j++) {
+                    if(s[i][j] == val) return true;
+                }
+            }
+        }
     }
     return false;
 }
@@ -113,6 +193,8 @@ class sudokuSolver {
 
             while(isComplete(sudoku) == false && cycles <= maxCycles) {
 
+                // to do, add validation for boxes not just rows
+
                 for(int i = 0; i < 9; i++) {
                     for(int j = 0; j < 9; j++) {
                         int cur = sudoku[i][j];
@@ -129,6 +211,10 @@ class sudokuSolver {
                                     }
 
                                     if(colIncludes(j, curNum, sudoku)) {
+                                        dic.add(k, removeX(dic.get(k), curNum));
+                                    }
+
+                                    if(boxIncludes(i, j, curNum, sudoku)) {
                                         dic.add(k, removeX(dic.get(k), curNum));
                                     }
                                 }
