@@ -150,12 +150,12 @@ class sudokuSolver {
                 string curLine = "";
 
                 for(int j = 0; j < 9; j++) {
-                    curLine += sudoku[i][j];
+                    curLine += to_string(sudoku[i][j]);
                     curLine += " "; 
                 }
 
                 result += curLine;
-                result += " \n \n";
+                result += "\n";
             }
 
             return result;
