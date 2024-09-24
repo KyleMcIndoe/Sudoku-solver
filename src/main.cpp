@@ -171,9 +171,10 @@ class sudokuSolver {
 
 int main() {
     sudokuSolver x(practiceSet);
-    x.solve(810);
+    x.solve(2);
 
-    std::cout << x.toAscii();
+    cout << "Solved sudoku:";
+    cout << x.toAscii();
 
     return 0;
 };
