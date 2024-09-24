@@ -157,10 +157,11 @@ class sudokuSolver {
                 result += curLine;
                 result += " \n \n";
             }
+
+            return result;
         }
 
         sudokuSolver(int s[9][9]) {
-
             for(int i = 0; i < 9; i++) {
                 for(int j = 0; j < 9; j++) {
                     sudoku[i][j] = s[i][j];
@@ -173,8 +174,8 @@ int main() {
     sudokuSolver x(practiceSet);
     x.solve(2);
 
-    cout << "Solved sudoku:";
-    cout << x.toAscii();
+    std::cout << "Solved sudoku: \n";
+    std::cout << x.toAscii();
 
     return 0;
 };
