@@ -1,6 +1,5 @@
 #include<stdlib.h>
 #include<iostream>
-#include<map>
 #include<vector>
 using namespace std;
 
@@ -96,7 +95,7 @@ class sudokuSolver {
 
         int sudoku[9][9];
 
-        void solve(int sudoku[9][9]){
+        void solve(int maxCycles){
             hMap dic;
 
             for(int i = 0; i < 9; i++) {
@@ -110,7 +109,9 @@ class sudokuSolver {
                 }
             }
 
-            while(isComplete(sudoku) == false) {
+            int cycles = 0;
+
+            while(isComplete(sudoku) == false && cycles <= maxCycles) {
 
                 for(int i = 0; i < 9; i++) {
                     for(int j = 0; j < 9; j++) {
@@ -137,6 +138,7 @@ class sudokuSolver {
                         }
                     }
                 }
+                cycles++;
             }
         }
 
@@ -169,6 +171,7 @@ class sudokuSolver {
 
 int main() {
     sudokuSolver x(practiceSet);
+    x.solve(810);
 
     std::cout << x.toAscii();
 
