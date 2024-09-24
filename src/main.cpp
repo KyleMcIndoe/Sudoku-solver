@@ -1,7 +1,38 @@
+#include<stdlib.h>
 #include<iostream>
 #include<map>
 #include<vector>
 using namespace std;
+
+class hMap {
+    public:
+        vector<string> keys;
+        vector<int> values[18];
+
+        int hashFunc(string s) {
+            int vone = (int)s[0];
+            int vtwo = (int)s[1];
+
+            int d = vtwo - vone;
+
+            if(d < 0) d = d * -2;
+
+            return d;
+        }
+
+        vector<int> get(string k) {
+            return values[hashFunc(k)];
+        }
+
+        void add(string k, vector<int> v) {
+            keys.push_back(k);
+            values[hashFunc(k)] = v; 
+        }
+
+        hMap() {
+
+        }
+};
 
 int practiceSet[9][9] = {
     {0, 0, 0, 7, 3, 6, 0, 5, 4},
@@ -66,7 +97,7 @@ class sudokuSolver {
         int sudoku[9][9];
 
         void solve(int sudoku[9][9]){
-            std::map<string, vector<int>> candids;
+            hMap dic;
 
             for(int i = 0; i < 9; i++) {
                 for(int j = 0; j < 9; j++) {
@@ -74,7 +105,7 @@ class sudokuSolver {
                     string k = to_string(i) + to_string(j);
 
                     if(sudoku[i][j] == 0) {
-                        candids.insert(k, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+                        dic.add(k, {1, 2, 3, 4, 5, 6, 7, 8, 9});
                     }
                 }
             }
@@ -88,20 +119,20 @@ class sudokuSolver {
                         if(cur == 0) {
                             string k = to_string(i) + to_string(j);
 
-                            if(candids[k].size() > 1) {
-                                for(int curC = 0; curC < candids[k].size(); curC++) {
-                                    int curNum = candids[k][curC];
+                            if(dic.get(k).size() > 1) {
+                                for(int curC = 0; curC < dic.get(k).size(); curC++) {
+                                    int curNum = dic.get(k)[curC];
 
                                     if(rowIncludes(i, curNum, sudoku)) {
-                                        candids[k] = removeX(candids[k], curNum);
+
                                     }
 
                                     if(colIncludes(j, curNum, sudoku)) {
-                                        candids[k] = removeX(candids[k], curNum);
+
                                     }
                                 }
                             } else {
-                                sudoku[i][j] = candids[k][0];
+                                sudoku[i][j] = dic.get(k)[0];
                             }
                         }
                     }
